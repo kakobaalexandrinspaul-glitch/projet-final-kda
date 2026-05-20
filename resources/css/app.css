@@ -1,0 +1,910 @@
+/* ==========================================
+   1. RESET & VARIABLES GLOBALES
+   ========================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Base d'adaptation de structure globale X */
+body:has(.sidebar) {
+    display: block;
+}
+
+body:has(.sidebar) .container {
+    display: grid;
+    grid-template-columns: 275px 1fr;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 0;
+    gap: 0;
+    align-items: start;
+}
+
+/* ==========================================
+   2. MISE EN PAGE STRUCTURELLE (LAYOUT)
+   ========================================== */
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 40px;
+}
+
+/* Page d'authentification initiale */
+.left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+}
+
+.right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    max-width: 550px;
+}
+
+.right h1 {
+    font-size: 64px;
+    font-weight: 800;
+    margin-bottom: 40px;
+    letter-spacing: -1.2px;
+}
+
+.right h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* Box formulaires (Connexion / Inscription) */
+.form-box, .login-container, .modal {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    background: #000;
+    border: 1px solid #2f3336;
+    border-radius: 16px;
+}
+
+/* ==========================================
+   3. COMPOSANTS DE FORMULAIRES & ENTRÉES
+   ========================================== */
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-size: 13px;
+    color: #71767b;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 16px 12px;
+    border-radius: 4px;
+    border: 1px solid #333333;
+    background: #000;
+    color: #fff;
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border: 1px solid #1d9bf0;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: #71767b;
+    z-index: 2;
+}
+
+.dob {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.dob select {
+    flex: 1;
+}
+
+.required-info {
+    font-size: 13px;
+    color: #71767b;
+    line-height: 16px;
+    margin-bottom: 10px;
+}
+
+/* ==========================================
+   4. BOUTONS & ÉLÉMENTS INTERACTIFS
+   ========================================== */
+button, .btn, .btn-outline, .btn-connect {
+    width: 100%;
+    padding: 12px;
+    border-radius: 9999px;
+    border: none;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+/* Boutons Réseaux (Google / Apple) */
+.btn.google, .btn.apple {
+    background-color: #fff;
+    color: #0f1419;
+}
+
+.btn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Boutons principaux et formulaires */
+.btn.next, .btn-connect, button[type="submit"] {
+    background-color: #eff3f4;
+    color: #0f1419;
+    margin-top: 24px;
+}
+
+/* Bouton Outline (Créer un compte) */
+.btn-outline {
+    background-color: transparent;
+    border: 1px solid #536471;
+    color: #fff;
+}
+
+.btn-outline:hover {
+    background-color: rgba(239, 243, 244, 0.1);
+}
+
+button:hover, .btn:hover {
+    opacity: 0.9;
+}
+
+/* Liens */
+.switch-method a, .forgot, .signup a {
+    color: #1d9bf0;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.switch-method a:hover, .forgot:hover, .signup a:hover {
+    text-decoration: underline;
+}
+
+/* Séparateur (OU) */
+.divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    color: #71767b;
+    font-size: 15px;
+    width: 100%;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background-color: #2f3336;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.terms, .login-section p, .signup {
+    font-size: 13px;
+    color: #71767b;
+    margin-top: 15px;
+    line-height: 16px;
+}
+
+.terms a {
+    color: #1d9bf0;
+    text-decoration: none;
+}
+
+/* ==========================================
+   5. INTERFACE UTILISATEUR COMPLÈTE (PROFIL & SIDEBAR)
+   ========================================== */
+/* Barre latérale (Sidebar) */
+.sidebar {
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #2f3336;
+}
+
+.sidebar .logo {
+    font-size: 30px;
+    padding: 12px;
+    color: #fff;
+    width: max-content;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px;
+    color: #e7e9ea;
+    text-decoration: none;
+    font-size: 20px;
+    border-radius: 9999px;
+    width: max-content;
+}
+
+.menu a:hover, .menu a.active {
+    background-color: rgba(239, 243, 244, 0.1);
+    font-weight: 700;
+}
+
+.post-btn {
+    background-color: #1d9bf0;
+    color: #fff;
+    margin-top: 16px;
+    padding: 14px;
+    width: 100%;
+}
+
+.sidebar-profile {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+.sidebar-profile:hover {
+    background-color: rgba(239, 243, 244, 0.1);
+}
+
+.sidebar-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-info h4 {
+    font-size: 15px;
+    color: #e7e9ea;
+}
+
+.profile-info p {
+    font-size: 15px;
+    color: #71767b;
+}
+
+/* Zone Centrale (Main content) */
+.main-content {
+    border-right: 1px solid #2f3336;
+    min-height: 100vh;
+}
+
+.top-bar {
+    position: sticky;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding: 6px 16px;
+    z-index: 10;
+    border-bottom: 1px solid #2f3336;
+}
+
+.top-user h2 {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.top-user span {
+    font-size: 13px;
+    color: #71767b;
+}
+
+.cover-photo {
+    position: relative;
+    background: #15181c;
+}
+
+.cover-photo img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.change-banner-btn {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid #536471;
+    color: #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    width: auto;
+    margin-bottom: 0;
+}
+
+.profile-section {
+    padding: 12px 16px 0 16px;
+}
+
+.profile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: -75px;
+    margin-bottom: 12px;
+}
+
+.profile-picture {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border: 4px solid #000;
+    object-fit: cover;
+    background: #000;
+}
+
+.change-avatar-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border: none;
+    color: #fff;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-bottom: 0;
+}
+
+.profile-top div:hover .change-avatar-btn {
+    opacity: 1;
+}
+
+.profile-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-btn {
+    background: transparent;
+    border: 1px solid #536471;
+    color: #fff;
+    width: auto;
+    padding: 0 16px;
+    height: 36px;
+    margin-bottom: 0;
+}
+
+.name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.verify-btn {
+    background: #fff;
+    color: #000;
+    width: auto;
+    font-size: 12px;
+    padding: 4px 12px;
+    margin-bottom: 0;
+}
+
+.username {
+    color: #71767b;
+    margin-bottom: 12px;
+}
+
+.location-row {
+    display: flex;
+    gap: 20px;
+    color: #71767b;
+    margin: 12px 0;
+    font-size: 15px;
+}
+
+.followers {
+    display: flex;
+    gap: 20px;
+    font-size: 14px;
+    color: #71767b;
+}
+
+.followers strong {
+    color: #fff;
+}
+
+/* ==========================================
+   6. ZONE DES ONGLETS & ANIMATIONS DE GLISSEMENT
+   ========================================== */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #2f3336;
+    margin-top: 20px;
+}
+
+.tabs a {
+    flex: 1;
+    text-align: center;
+    padding: 16px 0;
+    color: #71767b;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.tabs a.active-tab {
+    color: #fff;
+    border-bottom: none !important;
+}
+
+/* Ligne d'accentuation bleue animée */
+.tabs a.active-tab::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 4px;
+    background-color: #1d9bf0;
+    border-radius: 9999px;
+    animation: slideInTab 0.25s ease-out;
+}
+
+@keyframes slideInTab {
+    from { transform: scaleX(0); opacity: 0; }
+    to { transform: scaleX(1); opacity: 1; }
+}
+
+/* Fondu d'apparition fluide des publications */
+.tweets-list {
+    animation: fadeTweets 0.3s ease-in-out;
+}
+
+@keyframes fadeTweets {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================
+   7. ZONE DE CRÉATION DE TWEET (TWEET BOX) & PRÉVISUALISATION
+   ========================================== */
+.tweet-box {
+    display: flex;
+    padding: 15px 16px;
+    border-bottom: 1px solid #2f3336;
+    gap: 12px;
+}
+
+.tweet-box-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.tweet-box-body {
+    flex: 1;
+}
+
+.tweet-box-body textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    resize: none;
+    outline: none;
+    color: #e7e9ea;
+    font-size: 20px;
+    height: 52px;
+    font-family: inherit;
+    padding: 0;
+}
+
+.tweet-box-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.tweet-box-icons {
+    color: #1d9bf0;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.btn-tweet-submit {
+    background-color: #1d9bf0;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 15px;
+    width: auto;
+    margin-bottom: 0;
+}
+
+.btn-tweet-submit:hover {
+    background-color: #1a8cd8;
+}
+
+.char-counter {
+    font-size: 13px;
+    color: #71767b;
+    margin-left: auto;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.char-counter.warning { color: #ffd43b; }
+.char-counter.danger { color: #f4212e; }
+
+/* Conteneurs pour imports de photos / vidéos */
+.preview-container {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.preview-item-wrapper {
+    position: relative;
+    width: 100%;
+    max-height: 320px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #2f3336;
+}
+
+.preview-image, .preview-video, .tweet-media-content {
+    width: 100%;
+    height: 100%;
+    max-height: 320px;
+    object-fit: cover;
+}
+
+.remove-media-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(15, 20, 25, 0.75);
+    border: none;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+}
+
+/* ==========================================
+   8. STRUCTURE DYNAMIQUE DE LA TIMELINE
+   ========================================== */
+.tweet-item {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid #2f3336;
+    transition: background-color 0.2s;
+}
+
+.tweet-item:hover {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+.tweet-user-top {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tweet-user-top h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.delete-tweet-btn:hover {
+    background-color: rgba(244, 33, 46, 0.1) !important;
+    border-radius: 50%;
+}
+
+/* ==========================================
+   9. INTERFACE DE LA FENÊTRE MODALE (POPUP POSTER)
+   ========================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(91, 112, 131, 0.4);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 50px;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content-box {
+    background-color: #000;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 16px;
+    border: 1px solid #2f3336;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+    transform: translateY(-25px);
+    transition: transform 0.2s ease;
+}
+
+.modal-overlay.open .modal-content-box {
+    transform: translateY(0);
+}
+
+.modal-header {
+    display: flex;
+    padding: 8px 12px;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 0;
+}
+
+.close-btn:hover {
+    background-color: rgba(239, 243, 244, 0.1);
+}
+
+.modal-tweet-box {
+    border-bottom: none !important;
+}
+
+/* Pied de page (index.html) */
+.footer {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.footer-links {
+    font-size: 12px;
+    color: #71767b;
+    line-height: 18px;
+    text-align: center;
+}
+
+.footer-links a {
+    color: #71767b;
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* ==========================================
+   10. MEDIA QUERIES (RESPONSIVE POUR SMARTPHONES & TABLETTES)
+   ========================================== */
+
+/* --- TABLETTES ET CONFIGURATIONS MOYENNES (992px et moins) --- */
+@media (max-width: 992px) {
+    body:has(.sidebar) .container {
+        grid-template-columns: 70px 1fr;
+    }
+
+    .sidebar {
+        padding: 10px 4px;
+        align-items: center;
+    }
+
+    .menu a span, .sidebar-profile .profile-info, .post-btn {
+        display: none; /* Reduit l'affichage de la colonne latérale gauche */
+    }
+
+    .menu a {
+        width: 50px;
+        height: 50px;
+        justify-content: center;
+        padding: 0;
+    }
+
+    .sidebar .logo {
+        padding: 0;
+        margin-bottom: 15px;
+    }
+
+    .sidebar-profile {
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        justify-content: center;
+    }
+
+    .sidebar-profile .fa-ellipsis { display: none; }
+
+    .container {
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .right h1 {
+        font-size: 48px;
+    }
+}
+
+/* --- AFFICHAGE SMARTPHONES STANDARDS (768px et moins) --- */
+@media (max-width: 768px) {
+    .container:not(:has(.sidebar)) {
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-top: 40px;
+    }
+
+    .left, .right {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .logo {
+        max-width: 120px;
+        margin-bottom: 20px;
+    }
+
+    .right h1 {
+        font-size: 36px;
+        margin-bottom: 25px;
+    }
+
+    .form-box, .login-container, .modal {
+        padding: 24px 16px;
+        border: none; /* Allège l'interface sur de petits écrans */
+    }
+
+    .dob {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* --- RESOLUTIONS COMPACTES ET PETITS MOBILES (500px et moins) --- */
+@media (max-width: 500px) {
+    .cover-photo img {
+        height: 140px;
+    }
+
+    .profile-top {
+        margin-top: -55px;
+    }
+
+    .profile-picture, .change-avatar-btn {
+        width: 100px;
+        height: 100px;
+    }
+
+    .edit-btn {
+        height: 32px;
+        padding: 0 12px;
+        font-size: 13px;
+    }
+
+    .right h1 {
+        font-size: 32px;
+    }
+
+    .location-row {
+        flex-direction: column;
+        gap: 6px;
+        font-size: 14px;
+    }
+
+    .tabs a {
+        font-size: 14px;
+        padding: 12px 0;
+    }
+
+    .tweet-box-body textarea {
+        font-size: 17px;
+    }
+}
