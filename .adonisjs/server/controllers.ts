@@ -5,6 +5,11 @@
 
 export const controllers = {
   Auth: () => import('#controllers/auth_controller'),
+  Follows: () => import('#controllers/follows_controller'),
+  Hashtags: () => import('#controllers/hashtags_controller'),
+  Likes: () => import('#controllers/likes_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Session: () => import('#controllers/session_controller'),
+  Tweets: () => import('#controllers/tweets_controller'),
+  Users: () => import('#controllers/users_controller'),
 }

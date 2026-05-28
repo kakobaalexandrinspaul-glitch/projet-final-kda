@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil X</title>
-    <link rel="stylesheet" href="style.css">
-    {{--cette ligne magique charge votre fichier css via vite --}}
-    @vite(['resources/css/app.css'])
+    <!-- Font Awesome officiel pour afficher correctement toutes les icônes de X -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+    {{-- Cette ligne charge à la fois votre CSS et votre script JS via Vite --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 
@@ -19,8 +20,12 @@
             </div>
 
             <nav class="menu">
-                <a href="index.html">
+                <!-- Correction du lien : pointe vers la route racine / d'AdonisJS -->
+                <a href="/">
                     <i class="fa-solid fa-house"></i>
+                    <aside class="sidebar-x">
+  <!-- Logo X principal -->
+  
                     <span>Accueil</span>
                 </a>
                 <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Explorer</span></a>
@@ -36,17 +41,16 @@
             <button class="post-btn" id="sidebar-post-btn">Poster</button>
 
             <div class="sidebar-profile">
-                <!-- Classe ajoutée pour mise à jour de l'avatar en direct -->
                 <img id="sidebar-avatar" class="user-avatar-element" src="https://i.pravatar.cc/50?img=12" alt="Avatar">
                 <div class="profile-info">
-                    <h4 id="sidebar-name">Chargement...</h4>
-                    <p id="sidebar-username">@pseudo</p>
+                    <h4 id="sidebar-name">Christian Mwanya</h4>
+                    <p id="sidebar-username">@MwanyaChristian</p>
                 </div>
                 <i class="fa-solid fa-ellipsis" id="logout-btn" style="cursor:pointer;" title="Se déconnecter"></i>
             </div>
         </aside>
 
-        <!-- MAIN -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
             <!-- TOP BAR -->
             <div class="top-bar">
@@ -54,17 +58,18 @@
                     <i class="fa-solid fa-arrow-left"></i>
                 </div>
                 <div class="top-user">
-                    <h2 id="top-bar-name">Chargement...</h2>
-                    <span id="tweet-count">0 posts</span>
+                    <h2 id="top-bar-name">Christian Mwanya</h2>
+                    <span id="tweet-count">3 posts</span>
                 </div>
             </div>
 
             <!-- COVER -->
             <div class="cover-photo" style="position: relative;">
                 <img id="profile-banner-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Couverture">
-                <!-- Téléchargement de la bannière -->
                 <input type="file" id="banner-file-input" accept="image/*" style="display: none;">
-                <button class="change-banner-btn" onclick="document.getElementById('banner-file-input').click();"><i class="fa-solid fa-camera"></i> Modifier la couverture</button>
+                <button class="change-banner-btn" onclick="document.getElementById('banner-file-input').click();">
+                    <i class="fa-solid fa-camera"></i> Modifier la couverture
+                </button>
             </div>
 
             <!-- PROFILE SECTION -->
@@ -72,9 +77,10 @@
                 <div class="profile-top">
                     <div style="position: relative; width: 140px; height: 140px;">
                         <img class="profile-picture user-avatar-element" id="profile-avatar" src="https://i.pravatar.cc/150?img=12" alt="Avatar">
-                        <!-- Téléchargement de la photo de profil -->
                         <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
-                        <button class="change-avatar-btn" onclick="document.getElementById('avatar-file-input').click();"><i class="fa-solid fa-camera"></i></button>
+                        <button class="change-avatar-btn" onclick="document.getElementById('avatar-file-input').click();">
+                            <i class="fa-solid fa-camera"></i>
+                        </button>
                     </div>
                     <div class="profile-buttons">
                         <button class="icon-btn"><i class="fa-regular fa-envelope"></i></button>
@@ -84,10 +90,10 @@
 
                 <div class="profile-details">
                     <div class="name-row">
-                        <h2 id="profile-name">Chargement...</h2>
+                        <h2 id="profile-name">Christian Mwanya</h2>
                         <button class="verify-btn"><i class="fa-solid fa-circle-check"></i>Certification</button>
                     </div>
-                    <p class="username" id="profile-username">@pseudo</p>
+                    <p class="username" id="profile-username">@MwanyaChristian</p>
                     <p class="bio" id="profile-bio">worship Jesus && Code || Eat || Sleep</p>
 
                     <div class="location-row">
@@ -107,8 +113,6 @@
                 <img src="https://i.pravatar.cc/50?img=12" alt="Avatar" class="tweet-box-avatar user-avatar-element">
                 <div class="tweet-box-body">
                     <textarea id="tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
-
-                    <!-- Conteneur prévisualisation média de la timeline -->
                     <div id="media-preview-container" class="preview-container"></div>
 
                     <div class="tweet-box-bottom">
@@ -146,8 +150,6 @@
                 <img src="https://i.pravatar.cc/50?img=12" alt="Avatar" class="tweet-box-avatar user-avatar-element">
                 <div class="tweet-box-body">
                     <textarea id="modal-tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
-
-                    <!-- Conteneur prévisualisation média de la modale -->
                     <div id="modal-media-preview-container" class="preview-container"></div>
 
                     <div class="tweet-box-bottom">
@@ -155,7 +157,6 @@
                             <input type="file" id="modal-tweet-media-input" accept="image/*,video/*" style="display: none;">
                             <i class="fa-regular fa-image" onclick="document.getElementById('modal-tweet-media-input').click();" style="cursor: pointer;" title="Ajouter photo/vidéo"></i>
                             <i class="fa-regular fa-smile"></i>
-                            <span id="modal-tweet-char-count" class="char-counter">280</span>
                         </div>
                         <button id="modal-submit-tweet-btn" class="btn-tweet-submit">Poster</button>
                     </div>
@@ -163,7 +164,6 @@
             </div>
         </div>
     </div>
-<scrip src="/js/script.js"></script>
 
 </body>
 </html>

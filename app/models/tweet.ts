@@ -1,27 +1,22 @@
-import { DateTime } from 'luxon'
 import { BaseModel, column } from '@adonisjs/lucid/orm'
+import { DateTime } from 'luxon'
 
-export default class User extends BaseModel {
+export default class Tweet extends BaseModel {
+
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare username: string
+  declare userId: number
 
   @column()
-  declare email: string
-
-  @column({ serializeAs: null })
-  declare password: string
+  declare content: string
 
   @column()
-  declare bio: string | null
+  declare image: string | null
 
   @column()
-  declare avatar: string | null
-
-  @column()
-  declare isPrivate: boolean
+  declare parentId: number | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

@@ -4,66 +4,80 @@
     <meta charset="UTF-8">
     <title>Créer votre compte - X</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    {{-- Cette ligne magique charge votre fichier CSS via Vite --}}
-      @vite(['resources/css/app.css'])
-</head>
-<body>
+@vite([
+    'resources/css/app.css',
+    'resources/js/app.js'
+])
+  <div class="form-box">
 
-<div class="container">
-    <div class="form-box">
-        <h1>Créer votre compte</h1>
+    <h1>Créer votre compte</h1>
 
-        <!-- Formulaire avec ID pour le JavaScript -->
-        <form id="register-form">
+    <form id="register-form">
 
-            <label for="fullname">Nom et prénom</label>
-            <input type="text" id="fullname" name="fullname" required placeholder="Votre nom complet">
+        <label>Nom et prénom</label>
+        <input type="text" id="fullname" name="fullname" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required placeholder="kakobaalexandrinspauljr@gmail.com">
+        <label>Email</label>
+        <input type="email" id="email" name="email" required>
 
-            <label for="password">Mot de passe</label>
-            <!-- minlength="6" empêche les mots de passe trop courts -->
-            <input type="password" id="password" name="password" minlength="6" required placeholder="Minimum 6 caractères">
+        <label>Mot de passe</label>
+        <input type="password" id="password" name="password" required>
 
-            <label for="day">Date de naissance</label>
-            <p class="required-info">Cette information ne sera pas affichée publiquement. Confirmez votre âge, même si ce compte est pour une entreprise, un animal de compagnie ou autre chose.</p>
+        <label>Date de naissance</label>
 
-            <div class="dob">
-                <select id="day" name="day" required>
-                    <option value="">Jour</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <!-- Vos autres options de jours de 4 à 31 ici -->
-                </select>
+        <div class="dob">
 
-                <select id="month" name="month" required>
-                    <option value="">Mois</option>
-                    <option value="1">Janvier</option>
-                    <option value="2">Février</option>
-                    <!-- Vos autres options de mois ici -->
-                </select>
+            <select id="day" name="day" required>
+                <option value="">Jour</option>
 
-                <select id="year" name="year" required>
-                    <option value="">Année</option>
-                    <option value="2026">2026</option>
-                    <option value="2025">2025</option>
-                    <!-- Vos autres options d'années ici -->
-                </select>
-            </div>
-<!-- Ce lien permet de retourner à la page auth-client -->
+                @each(day in Array.from({ length: 31 }, (_, i) => i + 1))
+                    <option value="{{ day }}">{{ day }}</option>
+                @endeach
 
+            </select>
 
-            <!-- Bouton nettoyé : type "submit" obligatoire, sans le onclick intrusif -->
+            <select id="month" name="month" required>
+                <option value="">Mois</option>
 
-<button onclick="window.location.href='/profil-client'">
-    Rengistrer
-</button>
-        </form>
-    </div>
+                <option value="1">Janvier</option>
+                <option value="2">Février</option>
+                <option value="3">Mars</option>
+                <option value="4">Avril</option>
+                <option value="5">Mai</option>
+                <option value="6">Juin</option>
+                <option value="7">Juillet</option>
+                <option value="8">Août</option>
+                <option value="9">Septembre</option>
+                <option value="10">Octobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Décembre</option>
+
+            </select>
+
+            <select id="year" name="year" required>
+                <option value="">Année</option>
+
+                @each(year in Array.from({ length: 27 }, (_, i) => 2026 - i))
+                    <option value="{{ year }}">{{ year }}</option>
+                @endeach
+
+            </select>
+
+        </div>
+
+        <button type="submit" class="btn-outline">
+            Enregistrer
+        </button>
+
+    </form>
+
 </div>
-<script src="/js/script.js"></script>
 
+        </form>
+
+    </div>
+
+</div>
+
+</body>
 </html>

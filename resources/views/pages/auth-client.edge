@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <title>Authentification - X</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     {{-- Cette ligne magique charge votre fichier CSS via Vite --}}
-      @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
 
 <div class="container" id="auth-container">
 
     <div class="left">
-        <!-- Correction du chemin vers un dossier générique images/assets si nécessaire -->
-        <img src="asserset/XX (2).jpeg" alt="Logo X" class="logo">
+        <!-- Image logo X -->
+        <img src="public/XX (2).jpeg" alt="Logo X" class="logo">
     </div>
 
     <div class="right">
@@ -23,35 +22,35 @@
         <h2>Inscrivez-vous.</h2>
 
         <button class="btn google">
-            <img src="asserset/oip__1_-1.webp" alt="Google">
+            <img src="public/oip__1_-1.webp" alt="Google">
             S'inscrire avec Google
         </button>
 
         <button class="btn apple">
-            <img src="asserset/t__l__charger__2_.webp" alt="Apple">
+            <img src="public/t__l__charger__2_.webp" alt="Apple">
             S'inscrire avec Apple
         </button>
 
         <div class="divider">ou</div>
 
-        <!-- Redirection propre vers la page de création de compte -->
-       <button onclick="window.location.href='/compte-client'">
-    Créer un compte
-</button>
-<!-- Ce lien utilise le nom de la route configuré à l'étape 1 -->
-
-
+        <!-- Redirection vers le formulaire d'inscription -->
+        <!-- APRÈS (CORRIGÉ) -->
+        <classe class="login-section">
+        <button class="btn-outline" onclick="window.location.href='/compte-client'">
+                Créer un Compte
+            </button>
+            </classe>
+            
         <p class="terms">
-            En vous inscrivant, vous acceptez les <<a href="/profil-client">Aller au profil client</a>>Conditions d'utilisation</> et la <a href="#">Politique de confidentialité</a>.
+            En vous inscrivant, vous acceptez les <a href="#">Conditions d'utilisation</a> et la <a href="#">Politique de confidentialité</a>.
         </p>
-console.log("JS chargé")
+
         <div class="login-section">
             <p>Vous avez déjà un compte ?</p>
-            <!-- Redirection propre vers la page de saisie du mot de passe -->
-             <button onclick="window.location.href='/profil-client'">
-    Se connecter
-</button>
-
+            <!-- Redirection vers la page de connexion -->
+            <button class="btn-outline" onclick="window.location.href='/profil-client'">
+                Se connecter
+            </button>
         </div>
 
         <footer class="footer">
@@ -72,6 +71,5 @@ console.log("JS chargé")
 
 </div>
 
-<script src="public/js/script.js"></script>
 </body>
 </html>

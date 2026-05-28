@@ -1,6 +1,17 @@
 /* ==========================================
    1. RESET & VARIABLES GLOBALES
    ========================================== */
+:root {
+    --bg-color: #000000;
+    --text-color: #e7e9ea;
+    --text-muted: #71767b;
+    --primary-color: #1d9bf0;
+    --primary-hover: #1a8cd8;
+    --border-color: #2f3336;
+    --bg-hover: #16181c;
+    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -8,45 +19,42 @@
 }
 
 body {
-    background-color: #000;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: #fff;
+    background-color: var(--bg-color);
+    font-family: var(--font-stack);
+    color: var(--text-color);
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Base d'adaptation de structure globale X */
-body:has(.sidebar) {
-    display: block;
-}
-
-body:has(.sidebar) .container {
-    display: grid;
-    grid-template-columns: 275px 1fr;
-    max-width: 1250px;
-    margin: 0 auto;
-    padding: 0;
-    gap: 0;
-    align-items: start;
 }
 
 /* ==========================================
    2. MISE EN PAGE STRUCTURELLE (LAYOUT)
    ========================================== */
+/* Conteneur principal gérant l'affichage à 3 colonnes pour X */
 .container {
+    display: grid;
+    grid-template-columns: 275px 600px 1fr;
+    max-width: 1250px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+/* Fallback / Alignement spécifique pour les pages d'authentification sans barre latérale */
+body:not(:has(.sidebar)) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body:not(:has(.sidebar)) .container {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
     max-width: 1200px;
-    min-height: 100vh;
     padding: 20px;
     gap: 40px;
 }
 
-/* Page d'authentification initiale */
+/* Éléments de la page d'authentification initiale */
 .left {
     flex: 1;
     display: flex;
@@ -54,7 +62,7 @@ body:has(.sidebar) .container {
     justify-content: center;
 }
 
-.logo {
+.left .logo {
     max-width: 350px;
     width: 100%;
     height: auto;
@@ -87,8 +95,8 @@ body:has(.sidebar) .container {
     width: 100%;
     max-width: 450px;
     padding: 40px;
-    background: #000;
-    border: 1px solid #2f3336;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
     border-radius: 16px;
 }
 
@@ -100,7 +108,7 @@ label {
     margin-top: 20px;
     margin-bottom: 5px;
     font-size: 13px;
-    color: #71767b;
+    color: var(--text-muted);
 }
 
 input, select, textarea {
@@ -108,15 +116,15 @@ input, select, textarea {
     padding: 16px 12px;
     border-radius: 4px;
     border: 1px solid #333333;
-    background: #000;
-    color: #fff;
+    background: var(--bg-color);
+    color: var(--text-color);
     font-size: 16px;
     transition: border-color 0.2s;
 }
 
 input:focus, select:focus, textarea:focus {
     outline: none;
-    border: 1px solid #1d9bf0;
+    border: 1px solid var(--primary-color);
 }
 
 .input-box {
@@ -132,7 +140,7 @@ input:focus, select:focus, textarea:focus {
     transform: translateY(-50%);
     cursor: pointer;
     font-size: 16px;
-    color: #71767b;
+    color: var(--text-muted);
     z-index: 2;
 }
 
@@ -148,7 +156,7 @@ input:focus, select:focus, textarea:focus {
 
 .required-info {
     font-size: 13px;
-    color: #71767b;
+    color: var(--text-muted);
     line-height: 16px;
     margin-bottom: 10px;
 }
@@ -207,7 +215,7 @@ button:hover, .btn:hover {
 
 /* Liens */
 .switch-method a, .forgot, .signup a {
-    color: #1d9bf0;
+    color: var(--primary-color);
     text-decoration: none;
     font-size: 14px;
 }
@@ -221,7 +229,7 @@ button:hover, .btn:hover {
     text-align: center;
     margin: 20px 0;
     position: relative;
-    color: #71767b;
+    color: var(--text-muted);
     font-size: 15px;
     width: 100%;
 }
@@ -232,7 +240,7 @@ button:hover, .btn:hover {
     top: 50%;
     width: 42%;
     height: 1px;
-    background-color: #2f3336;
+    background-color: var(--border-color);
 }
 
 .divider::before { left: 0; }
@@ -240,13 +248,13 @@ button:hover, .btn:hover {
 
 .terms, .login-section p, .signup {
     font-size: 13px;
-    color: #71767b;
+    color: var(--text-muted);
     margin-top: 15px;
     line-height: 16px;
 }
 
 .terms a {
-    color: #1d9bf0;
+    color: var(--primary-color);
     text-decoration: none;
 }
 
@@ -261,13 +269,13 @@ button:hover, .btn:hover {
     padding: 10px 12px;
     display: flex;
     flex-direction: column;
-    border-right: 1px solid #2f3336;
+    border-right: 1px solid var(--border-color);
 }
 
 .sidebar .logo {
     font-size: 30px;
     padding: 12px;
-    color: #fff;
+    color: var(--text-color);
     width: max-content;
 }
 
@@ -282,24 +290,32 @@ button:hover, .btn:hover {
     align-items: center;
     gap: 20px;
     padding: 12px;
-    color: #e7e9ea;
+    color: var(--text-color);
     text-decoration: none;
     font-size: 20px;
     border-radius: 9999px;
     width: max-content;
+    transition: background 0.2s;
 }
 
 .menu a:hover, .menu a.active {
-    background-color: rgba(239, 243, 244, 0.1);
+    background-color: var(--bg-hover);
     font-weight: 700;
 }
 
 .post-btn {
-    background-color: #1d9bf0;
+    background-color: var(--primary-color);
     color: #fff;
     margin-top: 16px;
     padding: 14px;
     width: 100%;
+    border-radius: 9999px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.post-btn:hover {
+    background-color: var(--primary-hover);
 }
 
 .sidebar-profile {
@@ -310,32 +326,36 @@ button:hover, .btn:hover {
     padding: 12px;
     border-radius: 9999px;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
 .sidebar-profile:hover {
-    background-color: rgba(239, 243, 244, 0.1);
+    background-color: var(--bg-hover);
+}
+
+.user-avatar-element {
+    border-radius: 50%;
+    object-fit: cover;
 }
 
 .sidebar-profile img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
 }
 
 .profile-info h4 {
     font-size: 15px;
-    color: #e7e9ea;
+    color: var(--text-color);
 }
 
 .profile-info p {
     font-size: 15px;
-    color: #71767b;
+    color: var(--text-muted);
 }
 
 /* Zone Centrale (Main content) */
 .main-content {
-    border-right: 1px solid #2f3336;
+    border-right: 1px solid var(--border-color);
     min-height: 100vh;
 }
 
@@ -349,73 +369,103 @@ button:hover, .btn:hover {
     gap: 30px;
     padding: 6px 16px;
     z-index: 10;
-    border-bottom: 1px solid #2f3336;
+    border-bottom: 1px solid var(--border-color);
+    height: 53px;
 }
 
 .top-user h2 {
     font-size: 20px;
     margin-bottom: 0;
+    font-weight: 800;
 }
 
 .top-user span {
     font-size: 13px;
-    color: #71767b;
+    color: var(--text-muted);
 }
 
+.back {
+    font-size: 16px;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+.back:hover {
+    background-color: var(--bg-hover);
+}
+
+/* Gestion de la bannière et de la photo de profil */
 .cover-photo {
     position: relative;
     background: #15181c;
+    height: 200px;
 }
 
 .cover-photo img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
 }
 
 .change-banner-btn {
     position: absolute;
-    bottom: 15px;
-    right: 15px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: rgba(0, 0, 0, 0.6);
-    border: 1px solid #536471;
+    border: none;
     color: #fff;
-    padding: 6px 14px;
+    padding: 10px 16px;
     border-radius: 20px;
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 600;
     cursor: pointer;
     width: auto;
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.change-banner-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .profile-section {
-    padding: 12px 16px 0 16px;
+    padding: 0 16px;
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .profile-top {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-top: -75px;
-    margin-bottom: 12px;
+    margin-top: -70px;
+    margin-bottom: 15px;
 }
 
 .profile-picture {
     width: 140px;
     height: 140px;
     border-radius: 50%;
-    border: 4px solid #000;
+    border: 4px solid var(--bg-color);
     object-fit: cover;
     background: #000;
 }
 
 .change-avatar-btn {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 140px;
-    height: 140px;
+    top: 4px;
+    left: 4px;
+    width: 132px;
+    height: 132px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.4);
     border: none;
@@ -436,475 +486,293 @@ button:hover, .btn:hover {
 
 .profile-buttons {
     display: flex;
-    gap: 8px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
 .edit-btn {
     background: transparent;
-    border: 1px solid #536471;
-    color: #fff;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
     width: auto;
-    padding: 0 16px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
     height: 36px;
     margin-bottom: 0;
+    transition: background 0.2s;
 }
 
-.name-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.edit-btn:hover {
+    background-color: var(--bg-hover);
 }
 
-.verify-btn {
-    background: #fff;
-    color: #000;
-    width: auto;
-    font-size: 12px;
-    padding: 4px 12px;
-    margin-bottom: 0;
-}
-
-.username {
-    color: #71767b;
-    margin-bottom: 12px;
-}
-
-.location-row {
-    display: flex;
-    gap: 20px;
-    color: #71767b;
-    margin: 12px 0;
-    font-size: 15px;
-}
-
-.followers {
-    display: flex;
-    gap: 20px;
-    font-size: 14px;
-    color: #71767b;
-}
-
-.followers strong {
-    color: #fff;
-}
-
-/* ==========================================
-   6. ZONE DES ONGLETS & ANIMATIONS DE GLISSEMENT
-   ========================================== */
-.tabs {
-    display: flex;
-    border-bottom: 1px solid #2f3336;
-    margin-top: 20px;
-}
-
-.tabs a {
-    flex: 1;
-    text-align: center;
-    padding: 16px 0;
-    color: #71767b;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 15px;
-    position: relative;
-    transition: color 0.2s ease;
-}
-
-.tabs a.active-tab {
-    color: #fff;
-    border-bottom: none !important;
-}
-
-/* Ligne d'accentuation bleue animée */
-.tabs a.active-tab::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 20%;
-    width: 60%;
-    height: 4px;
-    background-color: #1d9bf0;
-    border-radius: 9999px;
-    animation: slideInTab 0.25s ease-out;
-}
-
-@keyframes slideInTab {
-    from { transform: scaleX(0); opacity: 0; }
-    to { transform: scaleX(1); opacity: 1; }
-}
-
-/* Fondu d'apparition fluide des publications */
-.tweets-list {
-    animation: fadeTweets 0.3s ease-in-out;
-}
-
-@keyframes fadeTweets {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==========================================
-   7. ZONE DE CRÉATION DE TWEET (TWEET BOX) & PRÉVISUALISATION
-   ========================================== */
-.tweet-box {
-    display: flex;
-    padding: 15px 16px;
-    border-bottom: 1px solid #2f3336;
-    gap: 12px;
-}
-
-.tweet-box-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-.tweet-box-body {
-    flex: 1;
-}
-
-.tweet-box-body textarea {
-    width: 100%;
+.icon-btn {
     background: transparent;
-    border: none;
-    resize: none;
-    outline: none;
-    color: #e7e9ea;
-    font-size: 20px;
-    height: 52px;
-    font-family: inherit;
-    padding: 0;
-}
-
-.tweet-box-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 12px;
-}
-
-.tweet-box-icons {
-    color: #1d9bf0;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    cursor: pointer;
-    font-size: 16px;
-    width: 100%;
-}
-
-.btn-tweet-submit {
-    background-color: #1d9bf0;
-    color: white;
-    border: none;
-    padding: 8px 18px;
-    border-radius: 20px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 15px;
-    width: auto;
-    margin-bottom: 0;
-}
-
-.btn-tweet-submit:hover {
-    background-color: #1a8cd8;
-}
-
-.char-counter {
-    font-size: 13px;
-    color: #71767b;
-    margin-left: auto;
-    margin-right: 5px;
-    font-weight: bold;
-}
-
-.char-counter.warning { color: #ffd43b; }
-.char-counter.danger { color: #f4212e; }
-
-/* Conteneurs pour imports de photos / vidéos */
-.preview-container {
-    width: 100%;
-    margin-top: 10px;
-}
-
-.preview-item-wrapper {
-    position: relative;
-    width: 100%;
-    max-height: 320px;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid #2f3336;
-}
-
-.preview-image, .preview-video, .tweet-media-content {
-    width: 100%;
-    height: 100%;
-    max-height: 320px;
-    object-fit: cover;
-}
-
-.remove-media-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(15, 20, 25, 0.75);
-    border: none;
-    color: #fff;
-    width: 30px;
-    height: 30px;
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 5;
-}
-
 /* ==========================================
-   8. STRUCTURE DYNAMIQUE DE LA TIMELINE
-   ========================================== */
-.tweet-item {
-    display: flex;
-    flex-direction: column;
-    border-bottom: 1px solid #2f3336;
-    transition: background-color 0.2s;
-}
-
-.tweet-item:hover {
-    background-color: rgba(255, 255, 255, 0.02);
-}
-
-.tweet-user-top {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.tweet-user-top h4 {
-    font-size: 15px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.delete-tweet-btn:hover {
-    background-color: rgba(244, 33, 46, 0.1) !important;
-    border-radius: 50%;
-}
-
-/* ==========================================
-   9. INTERFACE DE LA FENÊTRE MODALE (POPUP POSTER)
-   ========================================== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(91, 112, 131, 0.4);
-    backdrop-filter: blur(2px);
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 50px;
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-}
-
-.modal-overlay.open {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.modal-content-box {
-    background-color: #000;
-    width: 100%;
-    max-width: 600px;
-    border-radius: 16px;
-    border: 1px solid #2f3336;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    transform: translateY(-25px);
-    transition: transform 0.2s ease;
-}
-
-.modal-overlay.open .modal-content-box {
-    transform: translateY(0);
-}
-
-.modal-header {
-    display: flex;
-    padding: 8px 12px;
-}
-
-.close-btn {
-    background: transparent;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    cursor: pointer;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    margin-bottom: 0;
-}
-
-.close-btn:hover {
-    background-color: rgba(239, 243, 244, 0.1);
-}
-
-.modal-tweet-box {
-    border-bottom: none !important;
-}
-
-/* Pied de page (index.html) */
-.footer {
-    margin-top: 40px;
-    width: 100%;
-}
-
-.footer-links {
-    font-size: 12px;
-    color: #71767b;
-    line-height: 18px;
-    text-align: center;
-}
-
-.footer-links a {
-    color: #71767b;
-    text-decoration: none;
-    margin: 0 4px;
-}
-
-.footer-links a:hover {
-    text-decoration: underline;
-}
-
-/* ==========================================
-   10. MEDIA QUERIES (RESPONSIVE POUR SMARTPHONES & TABLETTES)
+   RESPONSIVE TABLETTE
    ========================================== */
 
-/* --- TABLETTES ET CONFIGURATIONS MOYENNES (992px et moins) --- */
-@media (max-width: 992px) {
-    body:has(.sidebar) .container {
-        grid-template-columns: 70px 1fr;
+@media screen and (max-width: 1024px) {
+
+    .container {
+        grid-template-columns: 80px 1fr;
     }
 
     .sidebar {
-        padding: 10px 4px;
         align-items: center;
+        padding: 10px 6px;
     }
 
-    .menu a span, .sidebar-profile .profile-info, .post-btn {
-        display: none; /* Reduit l'affichage de la colonne latérale gauche */
+    .menu a span,
+    .profile-info,
+    .post-btn span {
+        display: none;
     }
 
     .menu a {
-        width: 50px;
-        height: 50px;
         justify-content: center;
+        width: 52px;
+        height: 52px;
         padding: 0;
     }
 
-    .sidebar .logo {
+    .post-btn {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
         padding: 0;
-        margin-bottom: 15px;
     }
 
     .sidebar-profile {
-        padding: 0;
-        width: 45px;
-        height: 45px;
         justify-content: center;
     }
 
-    .sidebar-profile .fa-ellipsis { display: none; }
+    .main-content {
+        width: 100%;
+    }
 
-    .container {
-        gap: 20px;
-        padding: 15px;
+    .profile-picture {
+        width: 110px;
+        height: 110px;
+    }
+
+    .change-avatar-btn {
+        width: 102px;
+        height: 102px;
     }
 
     .right h1 {
         font-size: 48px;
     }
+
+    .right h2 {
+        font-size: 26px;
+    }
 }
 
-/* --- AFFICHAGE SMARTPHONES STANDARDS (768px et moins) --- */
-@media (max-width: 768px) {
-    .container:not(:has(.sidebar)) {
-        flex-direction: column;
-        justify-content: flex-start;
-        padding-top: 40px;
+/* ==========================================
+   RESPONSIVE MOBILE
+   ========================================== */
+
+@media screen and (max-width: 768px) {
+
+    body {
+        overflow-x: hidden;
     }
 
-    .left, .right {
-        flex: none;
+    .container {
+        display: block;
+        width: 100%;
+    }
+
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 65px;
+        background-color: var(--bg-color);
+        border-top: 1px solid var(--border-color);
+        border-right: none;
+        z-index: 999;
+        padding: 0;
+    }
+
+    .sidebar .logo,
+    .sidebar-profile,
+    .post-btn {
+        display: none;
+    }
+
+    .menu {
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        height: 100%;
+    }
+
+    .menu a {
+        width: auto;
+        height: auto;
+        padding: 10px;
+        border-radius: 50%;
+    }
+
+    .menu a span {
+        display: none;
+    }
+
+    .main-content {
+        width: 100%;
+        border-right: none;
+        padding-bottom: 80px;
+    }
+
+    .top-bar {
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .top-user h2 {
+        font-size: 18px;
+    }
+
+    .cover-photo {
+        height: 160px;
+    }
+
+    .profile-top {
+        margin-top: -45px;
+    }
+
+    .profile-picture {
+        width: 90px;
+        height: 90px;
+    }
+
+    .change-avatar-btn {
+        width: 82px;
+        height: 82px;
+        font-size: 18px;
+    }
+
+    .profile-buttons {
+        flex-wrap: wrap;
+    }
+
+    .edit-btn {
+        font-size: 13px;
+        padding: 6px 12px;
+    }
+
+    .form-box,
+    .login-container,
+    .modal {
         width: 100%;
         max-width: 100%;
+        border: none;
+        padding: 20px;
     }
 
-    .logo {
-        max-width: 120px;
-        margin-bottom: 20px;
+    body:not(:has(.sidebar)) .container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .left {
+        display: none;
+    }
+
+    .right {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
     }
 
     .right h1 {
-        font-size: 36px;
-        margin-bottom: 25px;
+        font-size: 38px;
+        margin-bottom: 20px;
     }
 
-    .form-box, .login-container, .modal {
-        padding: 24px 16px;
-        border: none; /* Allège l'interface sur de petits écrans */
+    .right h2 {
+        font-size: 24px;
     }
 
     .dob {
         flex-direction: column;
-        gap: 8px;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 15px;
+    }
+
+    button,
+    .btn,
+    .btn-outline,
+    .btn-connect {
+        font-size: 14px;
     }
 }
 
-/* --- RESOLUTIONS COMPACTES ET PETITS MOBILES (500px et moins) --- */
-@media (max-width: 500px) {
-    .cover-photo img {
-        height: 140px;
-    }
+/* ==========================================
+   PETITS SMARTPHONES
+   ========================================== */
 
-    .profile-top {
-        margin-top: -55px;
-    }
-
-    .profile-picture, .change-avatar-btn {
-        width: 100px;
-        height: 100px;
-    }
-
-    .edit-btn {
-        height: 32px;
-        padding: 0 12px;
-        font-size: 13px;
-    }
+@media screen and (max-width: 480px) {
 
     .right h1 {
-        font-size: 32px;
+        font-size: 30px;
     }
 
-    .location-row {
-        flex-direction: column;
-        gap: 6px;
-        font-size: 14px;
+    .right h2 {
+        font-size: 20px;
     }
 
-    .tabs a {
-        font-size: 14px;
-        padding: 12px 0;
+    .top-user h2 {
+        font-size: 16px;
     }
 
-    .tweet-box-body textarea {
-        font-size: 17px;
+    .profile-section {
+        padding: 0 10px;
+    }
+
+    .cover-photo {
+        height: 120px;
+    }
+
+    .profile-picture {
+        width: 75px;
+        height: 75px;
+    }
+
+    .change-avatar-btn {
+        width: 67px;
+        height: 67px;
+    }
+
+    .form-box,
+    .login-container,
+    .modal {
+        padding: 15px;
+    }
+
+    .menu a {
+        padding: 8px;
+    }
+
+    .divider::before,
+    .divider::after {
+        width: 35%;
     }
 }

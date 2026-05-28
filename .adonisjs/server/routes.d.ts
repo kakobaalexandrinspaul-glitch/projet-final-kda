@@ -4,25 +4,32 @@ type ParamValue = string | number | bigint | boolean
 
 export type ScannedRoutes = {
   ALL: {
-    'auth-client': { paramsTuple?: []; params?: {} }
-    'inscription-client': { paramsTuple?: []; params?: {} }
-    'profil-client': { paramsTuple?: []; params?: {} }
-    'compte-client': { paramsTuple?: []; params?: {} }
-    'motdepasse-client': { paramsTuple?: []; params?: {} }
+    'auth.register': { paramsTuple?: []; params?: {} }
+    'auth.login': { paramsTuple?: []; params?: {} }
+    'auth.logout': { paramsTuple?: []; params?: {} }
+    'tweets.index': { paramsTuple?: []; params?: {} }
+    'tweets.store': { paramsTuple?: []; params?: {} }
+    'tweets.retweet': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'likes.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'follows.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
-    'auth-client': { paramsTuple?: []; params?: {} }
-    'inscription-client': { paramsTuple?: []; params?: {} }
-    'profil-client': { paramsTuple?: []; params?: {} }
-    'compte-client': { paramsTuple?: []; params?: {} }
-    'motdepasse-client': { paramsTuple?: []; params?: {} }
+    'tweets.index': { paramsTuple?: []; params?: {} }
+    'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   HEAD: {
-    'auth-client': { paramsTuple?: []; params?: {} }
-    'inscription-client': { paramsTuple?: []; params?: {} }
-    'profil-client': { paramsTuple?: []; params?: {} }
-    'compte-client': { paramsTuple?: []; params?: {} }
-    'motdepasse-client': { paramsTuple?: []; params?: {} }
+    'tweets.index': { paramsTuple?: []; params?: {} }
+    'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  POST: {
+    'auth.register': { paramsTuple?: []; params?: {} }
+    'auth.login': { paramsTuple?: []; params?: {} }
+    'auth.logout': { paramsTuple?: []; params?: {} }
+    'tweets.store': { paramsTuple?: []; params?: {} }
+    'tweets.retweet': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'likes.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'follows.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
 }
 declare module '@adonisjs/core/types/http' {
