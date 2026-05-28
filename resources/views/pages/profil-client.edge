@@ -4,166 +4,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil X</title>
-    <!-- Font Awesome officiel pour afficher correctement toutes les icônes de X -->
-    <link rel="stylesheet" href="https://cloudflare.com">
-    {{-- Cette ligne charge à la fois votre CSS et votre script JS via Vite --}}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body>
 
-    <div class="container">
+<div class="container">
 
-        <!-- LEFT SIDEBAR -->
-        <aside class="sidebar">
-            <div class="logo">
-                <i class="fa-brands fa-x-twitter"></i>
-            </div>
+    <aside class="sidebar">
 
-            <nav class="menu">
-                <!-- Correction du lien : pointe vers la route racine / d'AdonisJS -->
-                <a href="/">
-                    <i class="fa-solid fa-house"></i>
-                    <aside class="sidebar-x">
-  <!-- Logo X principal -->
-  
-                    <span>Accueil</span>
-                </a>
-                <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Explorer</span></a>
-                <a href="#"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
-                <a href="#"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
-                <a href="#"><i class="fa-solid fa-bolt"></i><span>Grok</span></a>
-                <a href="#"><i class="fa-regular fa-bookmark"></i><span>Signets</span></a>
-                <a href="#"><i class="fa-solid fa-users"></i><span>Communautés</span></a>
-                <a href="#"><i class="fa-solid fa-crown"></i><span>Premium</span></a>
-                <a href="#" class="active"><i class="fa-solid fa-user"></i><span>Profil</span></a>
-            </nav>
+        <div class="logo">
+            <i class="fa-brands fa-x-twitter"></i>
+        </div>
 
-            <button class="post-btn" id="sidebar-post-btn">Poster</button>
+        <nav class="menu">
+            <a href="/">
+                <i class="fa-solid fa-house"></i>
+                <span>Accueil</span>
+            </a>
 
-            <div class="sidebar-profile">
-                <img id="sidebar-avatar" class="user-avatar-element" src="https://i.pravatar.cc/50?img=12" alt="Avatar">
-                <div class="profile-info">
-                    <h4 id="sidebar-name">Christian Mwanya</h4>
-                    <p id="sidebar-username">@MwanyaChristian</p>
-                </div>
-                <i class="fa-solid fa-ellipsis" id="logout-btn" style="cursor:pointer;" title="Se déconnecter"></i>
-            </div>
-        </aside>
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Explorer</span></a>
+            <a href="#"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
+            <a href="#"><i class="fa-solid fa-users"></i><span>Communautés</span></a>
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Grok</span></a>
+            <a href="#"><i class="fa-regular fa-bell"></i><span>Signets</span></a>
+            <a href="#"><i class="fa-regular fa-envelope"></i><span>Premium</span></a>
+            <a href="#"><i class="fa-solid fa-users"></i><span>Organisations ce</span></a>
+            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Plus</span></a>
+            <a href="#"><i class="fa-regular fa-bell"></i><span>Recherche</span></a>
 
-        <!-- MAIN CONTENT -->
-        <main class="main-content">
-            <!-- TOP BAR -->
-            <div class="top-bar">
-                <div class="back" onclick="window.history.back();" style="cursor:pointer;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </div>
-                <div class="top-user">
-                    <h2 id="top-bar-name">Christian Mwanya</h2>
-                    <span id="tweet-count">3 posts</span>
-                </div>
-            </div>
 
-            <!-- COVER -->
-            <div class="cover-photo" style="position: relative;">
-                <img id="profile-banner-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Couverture">
-                <input type="file" id="banner-file-input" accept="image/*" style="display: none;">
-                <button class="change-banner-btn" onclick="document.getElementById('banner-file-input').click();">
-                    <i class="fa-solid fa-camera"></i> Modifier la couverture
-                </button>
-            </div>
-
-            <!-- PROFILE SECTION -->
-            <div class="profile-section">
-                <div class="profile-top">
-                    <div style="position: relative; width: 140px; height: 140px;">
-                        <img class="profile-picture user-avatar-element" id="profile-avatar" src="https://i.pravatar.cc/150?img=12" alt="Avatar">
-                        <input type="file" id="avatar-file-input" accept="image/*" style="display: none;">
-                        <button class="change-avatar-btn" onclick="document.getElementById('avatar-file-input').click();">
-                            <i class="fa-solid fa-camera"></i>
-                        </button>
-                    </div>
-                    <div class="profile-buttons">
-                        <button class="icon-btn"><i class="fa-regular fa-envelope"></i></button>
-                        <button class="edit-btn" id="edit-profile-btn">Éditer le profil</button>
-                    </div>
-                </div>
-
-                <div class="profile-details">
-                    <div class="name-row">
-                        <h2 id="profile-name">Christian Mwanya</h2>
-                        <button class="verify-btn"><i class="fa-solid fa-circle-check"></i>Certification</button>
-                    </div>
-                    <p class="username" id="profile-username">@MwanyaChristian</p>
-                    <p class="bio" id="profile-bio">worship Jesus && Code || Eat || Sleep</p>
-
-                    <div class="location-row">
-                        <span><i class="fa-solid fa-location-dot"></i><span id="profile-location">Kinshasa, DRC</span></span>
-                        <span><i class="fa-regular fa-calendar"></i><span id="profile-join-date">A rejoint X en mars 2021</span></span>
-                    </div>
-
-                    <div class="followers">
-                        <span><strong>92</strong> abonnements</span>
-                        <span><strong>54</strong> abonnés</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ZONE DE CRÉATION DE TWEET INTÉGRÉE -->
-            <div class="tweet-box">
-                <img src="https://i.pravatar.cc/50?img=12" alt="Avatar" class="tweet-box-avatar user-avatar-element">
-                <div class="tweet-box-body">
-                    <textarea id="tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
-                    <div id="media-preview-container" class="preview-container"></div>
-
-                    <div class="tweet-box-bottom">
-                        <div class="tweet-box-icons">
-                            <input type="file" id="tweet-media-input" accept="image/*,video/*" style="display: none;">
-                            <i class="fa-regular fa-image" onclick="document.getElementById('tweet-media-input').click();" style="cursor: pointer;" title="Ajouter photo/vidéo"></i>
-                            <i class="fa-regular fa-smile"></i>
-                            <span id="tweet-char-count" class="char-counter">280</span>
-                        </div>
-                        <button id="submit-tweet-btn" class="btn-tweet-submit">Poster</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- TABS -->
-            <div class="tabs">
-                <a href="#" class="active-tab">Posts</a>
-                <a href="#">Réponses</a>
-                <a href="#">Médias</a>
-                <a href="#">J'aime</a>
-            </div>
-
-            <!-- CONTENEUR DYNAMIQUE DES TWEETS SAVÉS -->
-            <div id="user-tweets-container" class="tweets-list"></div>
-        </main>
-    </div>
-
-    <!-- BOÎTE MODALE DE POST (POPUP) -->
-    <div id="post-modal" class="modal-overlay">
-        <div class="modal-content-box">
-            <div class="modal-header">
-                <button id="close-modal-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="tweet-box modal-tweet-box">
-                <img src="https://i.pravatar.cc/50?img=12" alt="Avatar" class="tweet-box-avatar user-avatar-element">
-                <div class="tweet-box-body">
-                    <textarea id="modal-tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
-                    <div id="modal-media-preview-container" class="preview-container"></div>
-
-                    <div class="tweet-box-bottom">
-                        <div class="tweet-box-icons">
-                            <input type="file" id="modal-tweet-media-input" accept="image/*,video/*" style="display: none;">
-                            <i class="fa-regular fa-image" onclick="document.getElementById('modal-tweet-media-input').click();" style="cursor: pointer;" title="Ajouter photo/vidéo"></i>
-                            <i class="fa-regular fa-smile"></i>
-                        </div>
-                        <button id="modal-submit-tweet-btn" class="btn-tweet-submit">Poster</button>
-                    </div>
-                </div>
+            <a href="#" class="active">
+                <i class="fa-solid fa-user"></i>
+                <span>Profil</span>
+            </a>
+        </nav>
+ <button id="submit-tweet-btn">Poster</button>
+        <div class="sidebar-profile">
+            <img id="sidebar-avatar" class="user-avatar-element" src="https://i.pravatar.cc/50?img=12">
+            <div>
+                <h4 id="sidebar-name">Utilisateur</h4>
+                <p id="sidebar-username">@user</p>
             </div>
         </div>
-    </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <div class="top-bar">
+            <div onclick="window.history.back()" style="cursor:pointer;">
+                <i class="fa-solid fa-arrow-left"></i>
+            </div>
+
+            <div>
+                <h2 id="top-bar-name">Profil</h2>
+            </div>
+        </div>
+
+        <div class="cover-photo">
+            <img id="profile-banner-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+            <input type="file" id="banner-file-input" hidden>
+        </div>
+
+        <div class="profile-section">
+
+            <div class="profile-top">
+
+                <div>
+                    <img id="profile-avatar" class="profile-picture user-avatar-element" src="https://i.pravatar.cc/150?img=12">
+                    <input type="file" id="avatar-file-input" hidden>
+                </div>
+
+                <button id="edit-profile-btn">Éditer</button>
+
+            </div>
+
+            <div class="profile-details">
+
+                <h2 id="profile-name">Utilisateur</h2>
+
+                <p id="profile-username">@user</p>
+
+                <p id="profile-bio">Bio</p>
+
+            </div>
+
+        </div>
+
+        <div class="tweet-box">
+
+            <textarea id="tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
+
+
+
+        </div>
+
+        <div id="user-tweets-container"></div>
+
+    </main>
+
+</div>
 
 </body>
 </html>
