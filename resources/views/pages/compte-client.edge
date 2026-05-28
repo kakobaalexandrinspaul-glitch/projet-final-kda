@@ -4,41 +4,66 @@
     <meta charset="UTF-8">
     <title>Créer votre compte - X</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-@vite([
-    'resources/css/app.css',
-    'resources/js/app.js'
-])
-  <div class="form-box">
+    {{-- Cette ligne charge à la fois votre CSS et votre script JS via Vite --}}
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body>
 
-    <h1>Créer votre compte</h1>
+<div class="container">
+    <div class="form-box">
+        <h1>Créer votre compte</h1>
 
-    <form id="register-form">
+          <form id="register-form" method="POST" action="/register">
 
         <label>Nom et prénom</label>
-        <input type="text" id="fullname" name="fullname" required>
+        <input type="text" name="fullname" required>
 
         <label>Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" name="email" required>
 
         <label>Mot de passe</label>
-        <input type="password" id="password" name="password" required>
+        <input type="password" name="password" required>
 
         <label>Date de naissance</label>
 
         <div class="dob">
-
-            <select id="day" name="day" required>
+            <select name="day" required>
                 <option value="">Jour</option>
-
-                @each(day in Array.from({ length: 31 }, (_, i) => i + 1))
-                    <option value="{{ day }}">{{ day }}</option>
-                @endeach
-
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
             </select>
 
-            <select id="month" name="month" required>
+            <select name="month" required>
                 <option value="">Mois</option>
-
                 <option value="1">Janvier</option>
                 <option value="2">Février</option>
                 <option value="3">Mars</option>
@@ -51,18 +76,38 @@
                 <option value="10">Octobre</option>
                 <option value="11">Novembre</option>
                 <option value="12">Décembre</option>
-
             </select>
 
-            <select id="year" name="year" required>
+            <select name="year" required>
                 <option value="">Année</option>
-
-                @each(year in Array.from({ length: 27 }, (_, i) => 2026 - i))
-                    <option value="{{ year }}">{{ year }}</option>
-                @endeach
-
+                <option value="2026">2026</option>
+                <option value="2025">2025</option>
+                <option value="2024">2024</option>
+                <option value="2023">2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+                <option value="2015">2015</option>
+                <option value="2014">2014</option>
+                <option value="2013">2013</option>
+                <option value="2012">2012</option>
+                <option value="2011">2011</option>
+                <option value="2010">2010</option>
+                <option value="2009">2009</option>
+                <option value="2008">2008</option>
+                <option value="2007">2007</option>
+                <option value="2006">2006</option>
+                <option value="2005">2005</option>
+                <option value="2004">2004</option>
+                <option value="2003">2003</option>
+                <option value="2002">2002</option>
+                <option value="2001">2001</option>
+                <option value="2000">2000</option>
             </select>
-
         </div>
 
         <button type="submit" class="btn-outline">
@@ -70,13 +115,8 @@
         </button>
 
     </form>
-
 </div>
-
-        </form>
-
     </div>
-
 </div>
 
 </body>

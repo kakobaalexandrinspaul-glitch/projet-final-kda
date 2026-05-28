@@ -21,7 +21,7 @@ if (registerForm) {
 
         try {
 
-            const response = await fetch("/api/register", {
+            const response = await fetch("/register", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -31,11 +31,9 @@ if (registerForm) {
                     username,
                     email,
                     password,
-                    birthDate: {
-                        day,
-                        month,
-                        year
-                    }
+                    day,
+                    month,
+                    year
                 })
             });
 
@@ -45,27 +43,28 @@ if (registerForm) {
                 throw new Error(result.message || "Erreur inscription");
             }
 
-            localStorage.setItem("token", result.token);
-            localStorage.setItem("userId", result.user.id);
-            localStorage.setItem("userUsername", result.user.username);
+            localStorage.setItem("token", result.token || "");
+            localStorage.setItem("userId", result.user?.id || "");
+            localStorage.setItem("userUsername", result.user?.username || "");
 
             alert("Compte créé avec succès");
 
             window.location.href = "/profil-client";
 
         } catch (error) {
+
             console.error(error);
             alert(error.message);
         }
     });
-
-    return;
 }
 
 const savedUsername = localStorage.getItem("userUsername") || "Utilisateur";
 
 function updateAvatars(src) {
-    document.querySelectorAll(".user-avatar-element, .profile-picture")
+
+    document
+        .querySelectorAll(".user-avatar-element, .profile-picture")
         .forEach((img) => {
             img.src = src;
         });
@@ -76,12 +75,19 @@ function loadProfile() {
     const headerName = document.getElementById("top-bar-name");
     const profileName = document.getElementById("profile-name");
 
-    if (headerName) headerName.textContent = savedUsername;
-    if (profileName) profileName.textContent = savedUsername;
+    if (headerName) {
+        headerName.textContent = savedUsername;
+    }
+
+    if (profileName) {
+        profileName.textContent = savedUsername;
+    }
 
     const avatar = localStorage.getItem("userAvatarData");
 
-    if (avatar) updateAvatars(avatar);
+    if (avatar) {
+        updateAvatars(avatar);
+    }
 }
 
 const tweetsContainer = document.getElementById("user-tweets-container");
@@ -93,6 +99,7 @@ async function fetchTweets() {
     try {
 
         const response = await fetch("/api/tweets");
+
         const tweets = await response.json();
 
         tweetsContainer.innerHTML = "";
@@ -100,29 +107,36 @@ async function fetchTweets() {
         tweets.forEach((tweet) => {
 
             const div = document.createElement("div");
+
             div.classList.add("tweet-item");
+
             div.textContent = tweet.content;
 
             tweetsContainer.appendChild(div);
         });
 
     } catch (error) {
+
         console.error("Erreur chargement tweets", error);
     }
 }
 
 const tweetTextarea = document.getElementById("tweet-textarea");
+
 const submitTweetBtn = document.getElementById("submit-tweet-btn");
 
 if (tweetTextarea && submitTweetBtn) {
 
     tweetTextarea.addEventListener("input", () => {
-        submitTweetBtn.disabled = tweetTextarea.value.trim().length === 0;
+
+        submitTweetBtn.disabled =
+            tweetTextarea.value.trim().length === 0;
     });
 
     submitTweetBtn.addEventListener("click", async () => {
 
         const content = tweetTextarea.value.trim();
+
         const token = localStorage.getItem("token");
 
         if (!content) return;
@@ -143,16 +157,21 @@ if (tweetTextarea && submitTweetBtn) {
             const result = await response.json();
 
             if (!response.ok) {
-                throw new Error(result.message || "Erreur publication tweet");
+                throw new Error(
+                    result.message || "Erreur publication tweet"
+                );
             }
 
             tweetTextarea.value = "";
+
             submitTweetBtn.disabled = true;
 
             fetchTweets();
 
         } catch (error) {
+
             console.error(error);
+
             alert(error.message);
         }
     });
@@ -165,6 +184,7 @@ if (avatarFileInput) {
     avatarFileInput.addEventListener("change", (e) => {
 
         const file = e.target.files[0];
+
         if (!file) return;
 
         const reader = new FileReader();
@@ -174,6 +194,7 @@ if (avatarFileInput) {
             const imageData = event.target.result;
 
             localStorage.setItem("userAvatarData", imageData);
+
             updateAvatars(imageData);
         };
 
@@ -188,12 +209,17 @@ if (bannerFileInput) {
     bannerFileInput.addEventListener("change", (e) => {
 
         const file = e.target.files[0];
+
         if (!file) return;
 
         const reader = new FileReader();
 
         reader.onload = (event) => {
-            localStorage.setItem("userBannerData", event.target.result);
+
+            localStorage.setItem(
+                "userBannerData",
+                event.target.result
+            );
         };
 
         reader.readAsDataURL(file);
@@ -201,4 +227,5 @@ if (bannerFileInput) {
 }
 
 loadProfile();
+
 fetchTweets();
