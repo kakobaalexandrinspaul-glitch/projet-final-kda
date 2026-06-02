@@ -14,6 +14,7 @@
 
 <div class="container">
 
+    <!-- SIDEBAR GAUCHE -->
     <aside class="sidebar">
 
         <div class="logo">
@@ -21,92 +22,330 @@
         </div>
 
         <nav class="menu">
-            <a href="/">
+
+            <a href="#">
                 <i class="fa-solid fa-house"></i>
                 <span>Accueil</span>
             </a>
 
-            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Explorer</span></a>
-            <a href="#"><i class="fa-regular fa-bell"></i><span>Notifications</span></a>
-            <a href="#"><i class="fa-regular fa-envelope"></i><span>Messages</span></a>
-            <a href="#"><i class="fa-solid fa-users"></i><span>Communautés</span></a>
-            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Grok</span></a>
-            <a href="#"><i class="fa-regular fa-bell"></i><span>Signets</span></a>
-            <a href="#"><i class="fa-regular fa-envelope"></i><span>Premium</span></a>
-            <a href="#"><i class="fa-solid fa-users"></i><span>Organisations ce</span></a>
-            <a href="#"><i class="fa-solid fa-magnifying-glass"></i><span>Plus</span></a>
-            <a href="#"><i class="fa-regular fa-bell"></i><span>Recherche</span></a>
+            <a href="#">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <span>Explorer</span>
+            </a>
 
+            <a href="#">
+                <i class="fa-regular fa-bell"></i>
+                <span>Notifications</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-regular fa-envelope"></i>
+                <span>Messages</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-brain"></i>
+                <span>Grok</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-regular fa-bookmark"></i>
+                <span>Signets</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-users"></i>
+                <span>Communautés</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-brands fa-x-twitter"></i>
+                <span>Premium</span>
+            </a>
+
+            <a href="#">
+                <i class="fa-solid fa-building"></i>
+                <span>Organisations ce</span>
+            </a>
 
             <a href="#" class="active">
                 <i class="fa-solid fa-user"></i>
                 <span>Profil</span>
             </a>
+
+            <a href="#">
+                <i class="fa-solid fa-ellipsis"></i>
+                <span>Plus</span>
+            </a>
+
         </nav>
- <button id="submit-tweet-btn">Poster</button>
+
+        <button class="post-btn">
+            Poster
+        </button>
+
         <div class="sidebar-profile">
-            <img id="sidebar-avatar" class="user-avatar-element" src="https://i.pravatar.cc/50?img=12">
+
+            <img src="https://i.pravatar.cc/50?img=12" alt="">
+
             <div>
-                <h4 id="sidebar-name">Utilisateur</h4>
-                <p id="sidebar-username">@user</p>
+                <h4>Christian Mwanya</h4>
+                <p>@MwanyaChristian</p>
             </div>
+
         </div>
 
     </aside>
 
+    <!-- CONTENU PRINCIPAL -->
     <main class="main-content">
 
         <div class="top-bar">
-            <div onclick="window.history.back()" style="cursor:pointer;">
+
+            <div class="back-btn">
                 <i class="fa-solid fa-arrow-left"></i>
             </div>
 
             <div>
-                <h2 id="top-bar-name">Profil</h2>
+                <h2>Christian Mwanya 🇨🇩</h2>
+                <p>118 posts</p>
             </div>
+
         </div>
 
         <div class="cover-photo">
-            <img id="profile-banner-img" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
-            <input type="file" id="banner-file-input" hidden>
+
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f">
+
         </div>
 
         <div class="profile-section">
 
             <div class="profile-top">
 
-                <div>
-                    <img id="profile-avatar" class="profile-picture user-avatar-element" src="https://i.pravatar.cc/150?img=12">
-                    <input type="file" id="avatar-file-input" hidden>
-                </div>
+                <img
+                    src="https://i.pravatar.cc/150?img=12"
+                    class="profile-picture">
 
-                <button id="edit-profile-btn">Éditer</button>
+                <button class="edit-profile-btn">
+                    Éditer le profil
+                </button>
 
             </div>
 
             <div class="profile-details">
 
-                <h2 id="profile-name">Utilisateur</h2>
+                <h2>
+                    Christian Mwanya 🇨🇩
+                </h2>
 
-                <p id="profile-username">@user</p>
+                <p class="username">
+                    @MwanyaChristian
+                </p>
 
-                <p id="profile-bio">Bio</p>
+                <p class="bio">
+                    worship Jesus && Code ||
+                    Eat || Sleep
+                </p>
+
+                <div class="profile-meta">
+
+                    <span>
+                        <i class="fa-solid fa-location-dot"></i>
+                        Kinshasa, RDC
+                    </span>
+
+                    <span>
+                        <i class="fa-regular fa-calendar"></i>
+                        A rejoint X en mars 2021
+                    </span>
+
+                </div>
+
+                <div class="profile-stats">
+
+                    <span>
+                        <strong>92</strong> abonnements
+                    </span>
+
+                    <span>
+                        <strong>54</strong> abonnés
+                    </span>
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="tweet-box">
+        <!-- ONGLETS -->
 
-            <textarea id="tweet-textarea" placeholder="Quoi de neuf ?"></textarea>
+        <div class="profile-tabs">
 
-
+            <a href="#" class="active-tab">Posts</a>
+            <a href="#">Réponses</a>
+            <a href="#">Tweets marquants</a>
+            <a href="#">Articles</a>
+            <a href="#">Médias</a>
+            <a href="#">J'aime</a>
 
         </div>
 
-        <div id="user-tweets-container"></div>
+        <!-- POST 1 -->
+
+        <div class="tweet">
+
+            <div class="tweet-header">
+
+                <img src="https://i.pravatar.cc/40?img=12">
+
+                <div>
+
+                    <strong>Christian Mwanya 🇨🇩</strong>
+
+                    <span>
+                        @MwanyaChristian · 6 mars 2022
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="tweet-content">
+
+                Garder le focus 🎯
+
+                <br><br>
+
+                L'éternité
+
+            </div>
+
+        </div>
+
+        <!-- POST 2 -->
+
+        <div class="tweet">
+
+            <div class="tweet-header">
+
+                <img src="https://i.pravatar.cc/40?img=12">
+
+                <div>
+
+                    <strong>Christian Mwanya 🇨🇩</strong>
+
+                    <span>
+                        @MwanyaChristian
+                    </span>
+
+                </div>
+
+            </div>
+
+            <div class="tweet-content">
+
+                Super article.
+
+                <br><br>
+
+                From Failure to International Success:
+                How Online Learning Platforms Saved My Life
+
+            </div>
+
+        </div>
 
     </main>
+
+    <!-- SIDEBAR DROITE -->
+
+    <aside class="right-sidebar">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                placeholder="Chercher">
+
+        </div>
+
+        <div class="card">
+
+            <h3>Vous pourriez aimer</h3>
+
+            <div class="suggestion">
+
+                <img src="https://i.pravatar.cc/40?img=20">
+
+                <div>
+                    <strong>Urbano</strong>
+                    <p>@Urbano_N</p>
+                </div>
+
+                <button>Suivre</button>
+
+            </div>
+
+            <div class="suggestion">
+
+                <img src="https://i.pravatar.cc/40?img=21">
+
+                <div>
+                    <strong>Bernard Bahati</strong>
+                    <p>@Bernard_bahati</p>
+                </div>
+
+                <button>Suivre</button>
+
+            </div>
+
+            <div class="suggestion">
+
+                <img src="https://i.pravatar.cc/40?img=22">
+
+                <div>
+                    <strong>Billy</strong>
+                    <p>@RebeuDeter</p>
+                </div>
+
+                <button>Suivre</button>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Ce qui se passe</h3>
+
+            <div class="trend">
+                <span>Tendances</span>
+                <h4>Nairobi</h4>
+                <p>51 k publications</p>
+            </div>
+
+            <div class="trend">
+                <span>Tendances</span>
+                <h4>Le m23</h4>
+                <p>2728 publications</p>
+            </div>
+
+            <div class="trend">
+                <span>Tendances</span>
+                <h4>Le Rwanda</h4>
+                <p>5629 publications</p>
+            </div>
+
+            <div class="trend">
+                <span>Tendances</span>
+                <h4>AS Monaco</h4>
+                <p>3586 publications</p>
+            </div>
+
+        </div>
+
+    </aside>
 
 </div>
 

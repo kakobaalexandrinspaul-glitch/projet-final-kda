@@ -29,19 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             try {
 
-                const response = await fetch("/api/register", {
-
+                const response = await fetch("/api/auth/register", {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json",
                         "Accept": "application/json"
                     },
-
                     body: JSON.stringify({
                         username,
                         email,
-                        password
+                        password,
+                        day,
+                        month,
+                        year
                     })
                 });
 
@@ -51,35 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     throw new Error(result.message || "Erreur inscription");
                 }
 
-                /*
-                =========================
-                SAUVEGARDE SESSION
-                =========================
-                */
+                const user = result.utilisateur || result.user;
 
-                localStorage.setItem(
-                    "userId",
-                    result.utilisateur.id
-                );
-
-                localStorage.setItem(
-                    "userUsername",
-                    result.utilisateur.username
-                );
-
-                localStorage.setItem(
-                    "userEmail",
-                    result.utilisateur.email
-                );
+                localStorage.setItem("userId", user.id);
+                localStorage.setItem("userUsername", user.username);
+                localStorage.setItem("userEmail", user.email);
 
                 alert("Compte créé avec succès");
 
                 window.location.href = "/profil-client";
 
             } catch (error) {
-
                 console.error(error);
-
                 alert(error.message);
             }
         });
@@ -93,52 +76,35 @@ document.addEventListener("DOMContentLoaded", () => {
     =========================
     */
 
-    const savedUsername =
-        localStorage.getItem("userUsername") || "Utilisateur";
+    const savedUsername = localStorage.getItem("userUsername") || "Utilisateur";
 
     function updateAvatars(src) {
-
-        document
-            .querySelectorAll(
-                ".user-avatar-element, .profile-picture"
-            )
-            .forEach((img) => {
+        document.querySelectorAll(".user-avatar-element, .profile-picture")
+            .forEach(img => {
                 img.src = src;
             });
     }
 
     function loadProfile() {
 
-        const headerName =
-            document.getElementById("top-bar-name");
+        const headerName = document.getElementById("top-bar-name");
+        const profileName = document.getElementById("profile-name");
 
-        const profileName =
-            document.getElementById("profile-name");
+        if (headerName) headerName.textContent = savedUsername;
+        if (profileName) profileName.textContent = savedUsername;
 
-        if (headerName) {
-            headerName.textContent = savedUsername;
-        }
+        const avatar = localStorage.getItem("userAvatarData");
 
-        if (profileName) {
-            profileName.textContent = savedUsername;
-        }
-
-        const avatar =
-            localStorage.getItem("userAvatarData");
-
-        if (avatar) {
-            updateAvatars(avatar);
-        }
+        if (avatar) updateAvatars(avatar);
     }
 
     /*
     =========================
-    CHARGEMENT TWEETS
+    TWEETS
     =========================
     */
 
-    const tweetsContainer =
-        document.getElementById("user-tweets-container");
+    const tweetsContainer = document.getElementById("user-tweets-container");
 
     async function fetchTweets() {
 
@@ -146,34 +112,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
 
-            const response =
-                await fetch("/api/tweets");
-
-            const tweets =
-                await response.json();
+            const response = await fetch("/api/tweets");
+            const tweets = await response.json();
 
             tweetsContainer.innerHTML = "";
 
-            tweets.forEach((tweet) => {
+            tweets.forEach(tweet => {
 
-                const div =
-                    document.createElement("div");
-
+                const div = document.createElement("div");
                 div.classList.add("tweet-item");
-
-                div.innerHTML = `
-                    <p>${tweet.content}</p>
-                `;
+                div.textContent = tweet.content;
 
                 tweetsContainer.appendChild(div);
             });
 
         } catch (error) {
-
-            console.error(
-                "Erreur chargement tweets",
-                error
-            );
+            console.error("Erreur chargement tweets", error);
         }
     }
 
@@ -183,75 +137,51 @@ document.addEventListener("DOMContentLoaded", () => {
     =========================
     */
 
-    const tweetTextarea =
-        document.getElementById("tweet-textarea");
-
-    const submitTweetBtn =
-        document.getElementById("submit-tweet-btn");
+    const tweetTextarea = document.getElementById("tweet-textarea");
+    const submitTweetBtn = document.getElementById("submit-tweet-btn");
 
     if (tweetTextarea && submitTweetBtn) {
 
         tweetTextarea.addEventListener("input", () => {
-
-            submitTweetBtn.disabled =
-                tweetTextarea.value.trim().length === 0;
+            submitTweetBtn.disabled = tweetTextarea.value.trim().length === 0;
         });
 
-        submitTweetBtn.addEventListener(
-            "click",
-            async () => {
+        submitTweetBtn.addEventListener("click", async () => {
 
-                const content =
-                    tweetTextarea.value.trim();
+            const content = tweetTextarea.value.trim();
+            const userId = localStorage.getItem("userId");
 
-                const userId =
-                    localStorage.getItem("userId");
+            if (!content || !userId) return;
 
-                if (!content) return;
+            try {
 
-                try {
+                const response = await fetch("/api/tweets", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        content,
+                        userId
+                    })
+                });
 
-                    const response = await fetch(
-                        "/api/tweets",
-                        {
-                            method: "POST",
+                const result = await response.json();
 
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body: JSON.stringify({
-                                content,
-                                userId
-                            })
-                        }
-                    );
-
-                    const result =
-                        await response.json();
-
-                    if (!response.ok) {
-                        throw new Error(
-                            result.message ||
-                            "Erreur publication tweet"
-                        );
-                    }
-
-                    tweetTextarea.value = "";
-
-                    submitTweetBtn.disabled = true;
-
-                    fetchTweets();
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    alert(error.message);
+                if (!response.ok) {
+                    throw new Error(result.message || "Erreur publication tweet");
                 }
+
+                tweetTextarea.value = "";
+                submitTweetBtn.disabled = true;
+
+                fetchTweets();
+
+            } catch (error) {
+                console.error(error);
+                alert(error.message);
             }
-        );
+        });
     }
 
     /*
@@ -260,83 +190,63 @@ document.addEventListener("DOMContentLoaded", () => {
     =========================
     */
 
-    const avatarFileInput =
-        document.getElementById("avatar-file-input");
+    const avatarFileInput = document.getElementById("avatar-file-input");
 
     if (avatarFileInput) {
 
-        avatarFileInput.addEventListener(
-            "change",
-            (e) => {
+        avatarFileInput.addEventListener("change", (e) => {
 
-                const file = e.target.files[0];
+            const file = e.target.files[0];
+            if (!file) return;
 
-                if (!file) return;
+            const reader = new FileReader();
 
-                const reader =
-                    new FileReader();
+            reader.onload = (event) => {
 
-                reader.onload = (event) => {
+                const imageData = event.target.result;
 
-                    const imageData =
-                        event.target.result;
+                localStorage.setItem("userAvatarData", imageData);
+                updateAvatars(imageData);
+            };
 
-                    localStorage.setItem(
-                        "userAvatarData",
-                        imageData
-                    );
-
-                    updateAvatars(imageData);
-                };
-
-                reader.readAsDataURL(file);
-            }
-        );
+            reader.readAsDataURL(file);
+        });
     }
 
     /*
     =========================
-    BANNIERE PROFIL
+    BANNIERE
     =========================
     */
 
-    const bannerFileInput =
-        document.getElementById("banner-file-input");
+    const bannerFileInput = document.getElementById("banner-file-input");
 
     if (bannerFileInput) {
 
-        bannerFileInput.addEventListener(
-            "change",
-            (e) => {
+        bannerFileInput.addEventListener("change", (e) => {
 
-                const file = e.target.files[0];
+            const file = e.target.files[0];
+            if (!file) return;
 
-                if (!file) return;
+            const reader = new FileReader();
 
-                const reader =
-                    new FileReader();
+            reader.onload = (event) => {
+                localStorage.setItem("userBannerData", event.target.result);
+            };
 
-                reader.onload = (event) => {
-
-                    localStorage.setItem(
-                        "userBannerData",
-                        event.target.result
-                    );
-                };
-
-                reader.readAsDataURL(file);
-            }
-        );
+            reader.readAsDataURL(file);
+        });
     }
 
     /*
     =========================
-    INITIALISATION
+    INIT
     =========================
     */
 
     loadProfile();
-
     fetchTweets();
+
+    console.log("JS Adonis actif");
 
 });
