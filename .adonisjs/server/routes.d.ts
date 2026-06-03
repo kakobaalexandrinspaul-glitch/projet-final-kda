@@ -13,6 +13,7 @@ export type ScannedRoutes = {
     'likes.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'follows.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'users.update': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'tweets.index': { paramsTuple?: []; params?: {} }
@@ -30,6 +31,9 @@ export type ScannedRoutes = {
     'tweets.retweet': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'likes.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'follows.toggle': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  PUT: {
+    'users.update': { paramsTuple?: []; params?: {} }
   }
 }
 declare module '@adonisjs/core/types/http' {

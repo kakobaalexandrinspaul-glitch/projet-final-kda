@@ -1,10 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /*
-    =========================
-    INSCRIPTION UTILISATEUR
-    =========================
-    */
+    const userId = localStorage.getItem("userId");
+    const username = localStorage.getItem("userUsername") || "Utilisateur";
 
     const registerForm = document.getElementById("register-form");
 
@@ -14,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             event.preventDefault();
 
-            const username = document.getElementById("fullname")?.value.trim();
+            const usernameInput = document.getElementById("fullname")?.value.trim();
             const email = document.getElementById("email")?.value.trim();
             const password = document.getElementById("password")?.value;
 
@@ -22,63 +19,38 @@ document.addEventListener("DOMContentLoaded", () => {
             const month = document.getElementById("month")?.value;
             const year = document.getElementById("year")?.value;
 
-            if (!username || !email || !password || !day || !month || !year) {
-                alert("Tous les champs sont obligatoires");
-                return;
-            }
+            if (!usernameInput || !email || !password || !day || !month || !year) return;
 
-            try {
+            const response = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: usernameInput,
+                    email,
+                    password
+                })
+            });
 
-                const response = await fetch("/api/auth/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Accept": "application/json"
-                    },
-                    body: JSON.stringify({
-                        username,
-                        email,
-                        password,
-                        day,
-                        month,
-                        year
-                    })
-                });
+            const result = await response.json();
 
-                const result = await response.json();
+            if (!response.ok) return;
 
-                if (!response.ok) {
-                    throw new Error(result.message || "Erreur inscription");
-                }
+            const user = result.utilisateur || result.user;
 
-                const user = result.utilisateur || result.user;
+            localStorage.setItem("userId", user.id);
+            localStorage.setItem("userUsername", user.username);
+            localStorage.setItem("userEmail", user.email);
 
-                localStorage.setItem("userId", user.id);
-                localStorage.setItem("userUsername", user.username);
-                localStorage.setItem("userEmail", user.email);
-
-                alert("Compte créé avec succès");
-
-                window.location.href = "/profil-client";
-
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-            }
+            window.location.href = "/profil-client";
         });
 
         return;
     }
 
-    /*
-    =========================
-    PROFIL UTILISATEUR
-    =========================
-    */
-
-    const savedUsername = localStorage.getItem("userUsername") || "Utilisateur";
-
     function updateAvatars(src) {
+
         document.querySelectorAll(".user-avatar-element, .profile-picture")
             .forEach(img => {
                 img.src = src;
@@ -87,22 +59,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function loadProfile() {
 
-        const headerName = document.getElementById("top-bar-name");
-        const profileName = document.getElementById("profile-name");
+    const currentUsername =
+        localStorage.getItem("userUsername") || "Utilisateur";
 
-        if (headerName) headerName.textContent = savedUsername;
-        if (profileName) profileName.textContent = savedUsername;
+    const bio =
+        localStorage.getItem("userBio") || "Aucune bio";
 
-        const avatar = localStorage.getItem("userAvatarData");
+    const location =
+        localStorage.getItem("userLocation") || "Non renseigné";
 
-        if (avatar) updateAvatars(avatar);
+    const topBar = document.getElementById("top-bar-name");
+    const profileName = document.getElementById("profile-name");
+    const sidebarName = document.getElementById("sidebar-name");
+    const sidebarUsername = document.getElementById("sidebar-username");
+    const profileUsername = document.getElementById("profile-username");
+    const profileBio = document.getElementById("profile-bio");
+    const profileLocation = document.getElementById("profile-location");
+
+    if (topBar) topBar.textContent = currentUsername;
+    if (profileName) profileName.textContent = currentUsername;
+    if (sidebarName) sidebarName.textContent = currentUsername;
+
+    if (sidebarUsername) {
+        sidebarUsername.textContent = "@" + currentUsername;
     }
 
-    /*
-    =========================
-    TWEETS
-    =========================
-    */
+    if (profileUsername) {
+        profileUsername.textContent = "@" + currentUsername;
+    }
+
+    if (profileBio) {
+        profileBio.textContent = bio;
+    }
+
+    if (profileLocation) {
+        profileLocation.textContent = location;
+    }
+
+    const avatar = localStorage.getItem("userAvatarData");
+
+    if (avatar) {
+        updateAvatars(avatar);
+        localStorage.setItem("userBio", "");
+localStorage.setItem("userLocation", "");
+    }
+}
+    
 
     const tweetsContainer = document.getElementById("user-tweets-container");
 
@@ -110,33 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!tweetsContainer) return;
 
-        try {
+        const response = await fetch("/api/tweets");
+        const tweets = await response.json();
 
-            const response = await fetch("/api/tweets");
-            const tweets = await response.json();
+        tweetsContainer.innerHTML = "";
 
-            tweetsContainer.innerHTML = "";
-
-            tweets.forEach(tweet => {
-
-                const div = document.createElement("div");
-                div.classList.add("tweet-item");
-                div.textContent = tweet.content;
-
-                tweetsContainer.appendChild(div);
-            });
-
-        } catch (error) {
-            console.error("Erreur chargement tweets", error);
-        }
+        tweets.forEach(tweet => {
+            const div = document.createElement("div");
+            div.className = "tweet-item";
+            div.textContent = tweet.content;
+            tweetsContainer.appendChild(div);
+        });
     }
 
-    /*
-    =========================
-    AJOUT TWEET
-    =========================
-    */
 
+    
     const tweetTextarea = document.getElementById("tweet-textarea");
     const submitTweetBtn = document.getElementById("submit-tweet-btn");
 
@@ -149,46 +139,30 @@ document.addEventListener("DOMContentLoaded", () => {
         submitTweetBtn.addEventListener("click", async () => {
 
             const content = tweetTextarea.value.trim();
-            const userId = localStorage.getItem("userId");
 
             if (!content || !userId) return;
 
-            try {
+            const response = await fetch("/api/tweets", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    content,
+                    userId
+                })
+            });
 
-                const response = await fetch("/api/tweets", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        content,
-                        userId
-                    })
-                });
+            const result = await response.json();
 
-                const result = await response.json();
+            if (!response.ok) return;
 
-                if (!response.ok) {
-                    throw new Error(result.message || "Erreur publication tweet");
-                }
+            tweetTextarea.value = "";
+            submitTweetBtn.disabled = true;
 
-                tweetTextarea.value = "";
-                submitTweetBtn.disabled = true;
-
-                fetchTweets();
-
-            } catch (error) {
-                console.error(error);
-                alert(error.message);
-            }
+            fetchTweets();
         });
     }
-
-    /*
-    =========================
-    PHOTO PROFIL
-    =========================
-    */
 
     const avatarFileInput = document.getElementById("avatar-file-input");
 
@@ -202,22 +176,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const reader = new FileReader();
 
             reader.onload = (event) => {
-
-                const imageData = event.target.result;
-
-                localStorage.setItem("userAvatarData", imageData);
-                updateAvatars(imageData);
+                localStorage.setItem("userAvatarData", event.target.result);
+                updateAvatars(event.target.result);
             };
 
             reader.readAsDataURL(file);
         });
     }
-
-    /*
-    =========================
-    BANNIERE
-    =========================
-    */
 
     const bannerFileInput = document.getElementById("banner-file-input");
 
@@ -238,15 +203,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    /*
-    =========================
-    INIT
-    =========================
-    */
-
     loadProfile();
     fetchTweets();
-
-    console.log("JS Adonis actif");
-
 });
+
+const editProfileBtn =
+    document.getElementById("edit-profile-btn");
+
+const profileModal =
+    document.getElementById("profile-modal");
+
+const closeProfileBtn =
+    document.getElementById("close-profile-btn");
+
+const saveProfileBtn =
+    document.getElementById("save-profile-btn");
+    

@@ -86,14 +86,17 @@
 
         <div class="sidebar-profile">
 
-            <img src="https://i.pravatar.cc/50?img=12" alt="">
+    <img
+        src="https://i.pravatar.cc/50?img=12"
+        alt=""
+        class="user-avatar-element">
 
-            <div>
-                <h4>Christian Mwanya</h4>
-                <p>@MwanyaChristian</p>
-            </div>
+    <div>
+        <h4 id="sidebar-name">Utilisateur</h4>
+        <p id="sidebar-username">@utilisateur</p>
+    </div>
 
-        </div>
+</div>
 
     </aside>
 
@@ -107,9 +110,9 @@
             </div>
 
             <div>
-                <h2>Christian Mwanya 🇨🇩</h2>
-                <p>118 posts</p>
-            </div>
+    <h2 id="top-bar-name">Utilisateur</h2>
+    <p>0 post</p>
+</div>
 
         </div>
 
@@ -127,40 +130,45 @@
                     src="https://i.pravatar.cc/150?img=12"
                     class="profile-picture">
 
-                <button class="edit-profile-btn">
-                    Éditer le profil
-                </button>
-
+                <button class="edit-profile-btn" id="edit-profile-btn">
+    Éditer le profil
+</button>
             </div>
 
-            <div class="profile-details">
+            <div id="profile-modal" class="profile-modal">
+    ...
+</div>
+                  <div class="profile-details">
 
-                <h2>
-                    Christian Mwanya 🇨🇩
-                </h2>
+    <h2 id="profile-name">Utilisateur</h2>
 
-                <p class="username">
-                    @MwanyaChristian
-                </p>
+    <p class="username" id="profile-username">
+        @utilisateur
+    </p>
+<h2 id="name-text">Nom utilisateur</h2>
+<p id="email-text">email@mail.com</p>
+<p id="bio-text">Bio utilisateur</p>
+    <p class="bio" id="profile-bio">
+        <p id="bio-text">Bio utilisateur</p>
+    </p>
 
-                <p class="bio">
-                    worship Jesus && Code ||
-                    Eat || Sleep
-                </p>
+    <div class="profile-meta">
 
-                <div class="profile-meta">
+        <span>
+            <i class="fa-solid fa-location-dot"></i>
+            <span id="profile-location">Non renseigné</span>
+        </span>
 
-                    <span>
-                        <i class="fa-solid fa-location-dot"></i>
-                        Kinshasa, RDC
-                    </span>
+        <span>
+            <i class="fa-regular fa-calendar"></i>
+            A rejoint X
 
-                    <span>
-                        <i class="fa-regular fa-calendar"></i>
-                        A rejoint X en mars 2021
-                    </span>
+            
+        </span>
 
-                </div>
+    </div>
+
+</div>
 
                 <div class="profile-stats">
 
@@ -349,5 +357,7 @@
 
 </div>
 
+
+</div>
 </body>
 </html>
